@@ -1,4 +1,4 @@
-//SQL
+===[SQL]===
 CREATE DATABASE logindb;
 USE logindb;
 
@@ -9,7 +9,8 @@ CREATE TABLE users (
 );
 
 
-//HTML
+
+===[HTML]===
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,7 +60,8 @@ CREATE TABLE users (
 </html>
 
 
-//CSS
+
+===[CSS]===
 body {
     font-family: Arial;
     background-color: #f2f2f2;
@@ -87,7 +89,8 @@ button {
 }
 
 
-//PHP
+
+===[PHP]===
 <?php
 $conn = mysqli_connect("localhost", "root", "", "logindb");
 
