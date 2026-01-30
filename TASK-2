@@ -1,0 +1,97 @@
+//PHP
+<?php
+$conn = mysqli_connect("localhost", "root", "", "studentdb");
+
+$sort = $_GET['sort'] ?? '';
+$dept = $_GET['dept'] ?? '';
+
+$query = "SELECT * FROM students";
+
+if ($dept != "") {
+    $query .= " WHERE department='$dept'";
+}
+
+if ($sort == "name") {
+    $query .= " ORDER BY name";
+} elseif ($sort == "dob") {
+    $query .= " ORDER BY dob";
+}
+
+$result = mysqli_query($conn, $query);
+?>
+
+
+//HTML
+<h2>Student Dashboard</h2>
+
+<form method="get">
+    Sort By:
+    <select name="sort">
+        <option value="">None</option>
+        <option value="name">Name</option>
+        <option value="dob">Date of Birth</option>
+    </select>
+
+    Department:
+    <select name="dept">
+        <option value="">All</option>
+        <option>CSE</option>
+        <option>ECE</option>
+        <option>EEE</option>
+        <option>MECH</option>
+    </select>
+
+    <button type="submit">Apply</button>
+</form>
+
+
+//PHP
+<table border="1" cellpadding="8">
+<tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>DOB</th>
+    <th>Department</th>
+    <th>Phone</th>
+</tr>
+
+<?php
+while ($row = mysqli_fetch_assoc($result)) {
+    echo "<tr>
+        <td>{$row['name']}</td>
+        <td>{$row['email']}</td>
+        <td>{$row['dob']}</td>
+        <td>{$row['department']}</td>
+        <td>{$row['phone']}</td>
+    </tr>";
+}
+?>
+</table>
+
+
+//PHP
+$countQuery = "SELECT department, COUNT(*) AS total 
+               FROM students 
+               GROUP BY department";
+
+$countResult = mysqli_query($conn, $countQuery);
+
+
+//PHP
+<h3>Students Count per Department</h3>
+
+<table border="1" cellpadding="8">
+<tr>
+    <th>Department</th>
+    <th>Total Students</th>
+</tr>
+
+<?php
+while ($row = mysqli_fetch_assoc($countResult)) {
+    echo "<tr>
+        <td>{$row['department']}</td>
+        <td>{$row['total']}</td>
+    </tr>";
+}
+?>
+</table>
